@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+</head>
+<body>
+    <h1>Payment Information Form</h1>
+    <form id="paymentForm" onsubmit="return handleSubmit(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="class">Class:</label>
+        <input type="text" id="class" name="class" required><br><br>
+
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department" required><br><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required><br><br>
+
+        <label for="transactionId">Transaction ID:</label>
+        <input type="text" id="transactionId" name="transactionId" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(document.getElementById('paymentForm'));
+            const data = {};
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Save to local storage
+            let submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+            submissions.push(data);
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+
+            alert('Data saved successfully');
+            displayData();
+        }
+
+        function displayData() {
+            let submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+            console.log('All Submissions:', submissions);
+        }
+
+        // Display data on page load
+        window.onload = displayData;
+    </script>
+</body>
+</html>
